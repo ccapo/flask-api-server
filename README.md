@@ -3,6 +3,7 @@ A Flask API Server
 
 ## Setup Environment
 ```
+sudo apt install virtualenv
 virtualenv --python=/usr/bin/python3.8 /home/ubuntu/flask-api-server/env
 source env/bin/activate
 ```
