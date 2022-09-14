@@ -16,7 +16,8 @@ load_dotenv()
 app = Flask(__name__)
 
 # Define app config parameters
-app.config['PORT'] = os.getenv('PORT', 5050)
+app.config['HOST'] = os.getenv('HOST', '0.0.0.0')
+app.config['PORT'] = os.getenv('PORT', 80)
 app.config['ENV'] = os.getenv('ENV', 'production')
 app.config['DEBUG'] = os.getenv('DEBUG', False)
 app.config['DATABASE'] = os.path.join(os.getcwd(), 'db.sqlite3')
@@ -114,5 +115,5 @@ def uncontain(token):
   return {"message": "Uncontainment initiated"}
 
 if __name__ == '__main__':
-  app.run(port=app.config['PORT'], debug=app.config['DEBUG'])
+  app.run(host=app.config['HOST'], port=app.config['PORT'], debug=app.config['DEBUG'])
   db.close()
