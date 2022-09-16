@@ -20,7 +20,7 @@ app.config['HOST'] = os.getenv('HOST', '0.0.0.0')
 app.config['PORT'] = os.getenv('PORT', 80)
 app.config['ENV'] = os.getenv('ENV', 'production')
 app.config['DEBUG'] = os.getenv('DEBUG', False)
-app.config['DATABASE'] = os.path.join(os.getcwd(), 'db.sqlite3')
+app.config['DATABASE'] = os.path.join(os.getcwd(), './data/db.sqlite3')
 
 # Database
 db = Database(app.config['DATABASE'])

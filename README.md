@@ -3,6 +3,7 @@ A Flask API Server
 
 ## Setup Environment
 ```
+git clone https://github.com/ccapo/flask-api-server.git
 sudo apt install virtualenv python3.8
 virtualenv --python=/usr/bin/python3.8 /home/ubuntu/flask-api-server/env
 source env/bin/activate
@@ -13,14 +14,16 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
-## Generate .env file
+## Create .env file
 ```
-python env_generation.py > .env
+python env_setup.py > .env
 ```
 
 ## Initialize the Database
 ```
+cd data
 python init_db.py
+cd ../
 ```
 
 ## Run API Server (Promote to service?)
