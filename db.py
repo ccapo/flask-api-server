@@ -22,6 +22,11 @@ class Database:
     self.db.execute("INSERT OR IGNORE INTO client (customer_uuid, client_uuid) VALUES (?,?);", (customer_uuid, client_uuid,))
     self.db.execute("COMMIT TRANSACTION;")
 
+  def get_scan_group_ids(self, customer_uuid, client_uuid):
+    rows = self.db.execute("SELECT sg.id FROM scan_group sg LEFT JOIN group_client gc ON sg.id = gc.group_id WHERE sg.customer_uuid = ? AND gc.client_uuid = ? AND sg.enabled = 'true';", (customer_uuid, client_uuid,)).fetchall()
+    scan_groups = [row[0] for row in rows]
+    return scan_groups
+
   def get_authorization(self, customer_uuid, client_uuid):
     token = self.db.execute("SELECT * FROM authorization WHERE customer_uuid = ? AND client_uuid = ? AND enabled = 'true';", (customer_uuid, client_uuid,)).fetchone()
     return token
