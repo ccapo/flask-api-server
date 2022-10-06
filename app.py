@@ -64,11 +64,10 @@ def register():
     if result['token'] == registration_token:
       # Check if client exists for customer, if not create it
       db.upsert_client(customer_uuid, client_uuid)
-      scan_group_ids = db.get_scan_group_ids(customer_uuid, client_uuid)
       token = auth.jwt_token(customer_uuid, client_uuid)
       updated = db.upsert_authorization(customer_uuid, client_uuid, token)
       if updated:
-        return {"message": "Successfully registered", "token": token, "scan_group_ids": scan_group_ids}
+        return {"message": "Successfully registered", "token": token}
       else:
         return {"message": "Registration token is invalid"}, 401
     else:
@@ -116,6 +115,11 @@ def scan_group(token):
   return {"message": "Scan initiated for group"}
 
 # TODO: Add endpoint to add client to specify group, creating group if it DNE
+@app.route('/api/scan/group/create', methods=['POST'])
+@auth.token_required
+def scan_group_create(token):
+  body = request.get_json()
+  return {"message": "Scan group created"}
 
 @app.route('/api/scan/group/membership', methods=['PUT'])
 @auth.token_required
