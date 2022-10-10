@@ -12,7 +12,7 @@ class Auth:
     self.JWT_SECRET = os.getenv('JWT_SECRET', 'shhhh')
 
   # API token required for internal endpoints
-  def token_required(self, f):
+  def admin_token_required(self, f):
     @wraps(f)
     def decorated(*args, **kwargs):
       token = None
@@ -33,13 +33,13 @@ class Auth:
 
     return decorated
 
-  # JWT required for external endpoints
-  def jwt_required(self, f):
+  # API token required for external endpoints
+  def token_required(self, f):
     @wraps(f)
     def decorated(*args, **kwargs):
       token = None
-      if 'Authorization' in request.headers:
-        token = request.headers["Authorization"].split(" ")[1]
+      if 'X-API-KEY' in request.headers:
+        token = request.headers.get('X-API-KEY')
       if not token:
         return {
           "message": "Authentication token is missing",

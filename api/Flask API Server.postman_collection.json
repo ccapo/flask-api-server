@@ -1,0 +1,397 @@
+{
+	"info": {
+		"_postman_id": "74186602-548b-4e91-a204-da1c3fc6e6c4",
+		"name": "Flask API Server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4058107"
+	},
+	"item": [
+		{
+			"name": "External",
+			"item": [
+				{
+					"name": "Uptime",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{AWS_URL}}",
+							"host": [
+								"{{AWS_URL}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Update Bearer Token\", function () {",
+									"    var jsonData = JSON.parse(responseBody);",
+									"    pm.collectionVariables.set(\"BEARER_TOKEN\", jsonData['token']);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_uuid\": \"96326e2a-6487-4cfd-a859-2881b330c30d\",\n    \"client_uuid\": \"1a5d154b-8fb6-40fb-89e6-6b2bdba6973a\",\n    \"registration_token\": \"sMCGzni0dWm7WCH2XNDSqxMcrpmpFwIJ9sqQeik/WbEY671uiArn23V3SViNkiDUta9UtThHkAgQhToAMxPFzL0aJVhw3q8lBWkh9dFGNLYLIz7bI7hqXlZawwJX9qewIeLaqngonV6Xkp5kGOsje9pE2M21ejuTd+VzNhJaWSE=\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{AWS_URL}}/register",
+							"host": [
+								"{{AWS_URL}}"
+							],
+							"path": [
+								"register"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "1a5d154b-8fb6-40fb-89e6-6b2bdba6973a",
+									"description": "Client #1",
+									"disabled": true
+								},
+								{
+									"key": null,
+									"value": "ce76a558-1355-44d9-b3e6-78d947d2ffdc",
+									"description": "Client #2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Scan Upload",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"vulnerability\",\n        \"passed\": 12345,\n        \"failed\": 321,\n        \"errored\": 123\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{AWS_URL}}/scan/upload",
+							"host": [
+								"{{AWS_URL}}"
+							],
+							"path": [
+								"scan",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Audit Upload",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"hardware\",\n        \"hardware\": {\n            \"manufacturer\": \"Acme Ltd\",\n            \"motherboard\": \"SR-71\",\n            \"ram\": \"128 GB\",\n            \"cpu\": \"3.2 GHz x 8\",\n            \"drive\": \"1.0 TB\"\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{AWS_URL}}/audit/upload",
+							"host": [
+								"{{AWS_URL}}"
+							],
+							"path": [
+								"audit",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Internal",
+			"item": [
+				{
+					"name": "Scan",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_uuid\": \"96326e2a-6487-4cfd-a859-2881b330c30d\",\n    \"client_uuid\": \"1a5d154b-8fb6-40fb-89e6-6b2bdba6973a\",\n    \"type\": \"vulnerability\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{AWS_URL}}/api/scan",
+							"host": [
+								"{{AWS_URL}}"
+							],
+							"path": [
+								"api",
+								"scan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Scan Group",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_uuid\": \"96326e2a-6487-4cfd-a859-2881b330c30d\",\n    \"group_id\": 123,\n    \"type\": \"vulnerability\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{AWS_URL}}/api/scan/group",
+							"host": [
+								"{{AWS_URL}}"
+							],
+							"path": [
+								"api",
+								"scan",
+								"group"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Scan Group Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_uuid\": \"96326e2a-6487-4cfd-a859-2881b330c30d\",\n    \"client_uuid\": \"1a5d154b-8fb6-40fb-89e6-6b2bdba6973a\",\n    \"group_id\": 123\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{AWS_URL}}/api/scan/group/create",
+							"host": [
+								"{{AWS_URL}}"
+							],
+							"path": [
+								"api",
+								"scan",
+								"group",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Scan Group Membership",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_uuid\": \"96326e2a-6487-4cfd-a859-2881b330c30d\",\n    \"client_uuid\": \"1a5d154b-8fb6-40fb-89e6-6b2bdba6973a\",\n    \"src_group_id\": 123,\n    \"dst_group_id\": 321\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{AWS_URL}}/api/scan/group/membership",
+							"host": [
+								"{{AWS_URL}}"
+							],
+							"path": [
+								"api",
+								"scan",
+								"group",
+								"membership"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Contain",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_uuid\": \"96326e2a-6487-4cfd-a859-2881b330c30d\",\n    \"client_uuid\": \"1a5d154b-8fb6-40fb-89e6-6b2bdba6973a\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{AWS_URL}}/api/contain",
+							"host": [
+								"{{AWS_URL}}"
+							],
+							"path": [
+								"api",
+								"contain"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Uncontain",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_uuid\": \"96326e2a-6487-4cfd-a859-2881b330c30d\",\n    \"client_uuid\": \"1a5d154b-8fb6-40fb-89e6-6b2bdba6973a\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{AWS_URL}}/api/uncontain",
+							"host": [
+								"{{AWS_URL}}"
+							],
+							"path": [
+								"api",
+								"uncontain"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "{{API_TOKEN}}",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "X-API-Key",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{BEARER_TOKEN}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BEARER_TOKEN",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjdXN0b21lcl91dWlkIjoiOTYzMjZlMmEtNjQ4Ny00Y2ZkLWE4NTktMjg4MWIzMzBjMzBkIiwiY2xpZW50X3V1aWQiOiIxYTVkMTU0Yi04ZmI2LTQwZmItODllNi02YjJiZGJhNjk3M2EiLCJpc3MiOiJhd24iLCJpYXQiOjE2NjIzNTU1MTEsImV4cCI6MTY2MjM1OTExMX0.hieTzcLrRzD8QM4SfJbwzt4F3QnIdIbQDM4cbThzgVY",
+			"type": "string"
+		},
+		{
+			"key": "API_TOKEN",
+			"value": "wM03wPa7gb4kSuWExoMeZDC1sU79jDsFnQD8W/KVQYJTRvwDToxH/u1elYOuBMTkm/4WvG3FzTH3HzjtVa4Jkw==",
+			"type": "string"
+		},
+		{
+			"key": "AWS_URL",
+			"value": "http://localhost:5050",
+			"type": "string"
+		}
+	]
+}

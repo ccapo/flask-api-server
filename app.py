@@ -76,7 +76,7 @@ def register():
     return {"message": "Registration token is invalid"}, 401
 
 @app.route('/scan/upload', methods=['POST'])
-@auth.jwt_required
+@auth.token_required
 def scan_upload(customer, client):
   try:
     body = request.get_json()
@@ -89,7 +89,7 @@ def scan_upload(customer, client):
     }, 500
 
 @app.route('/audit/upload', methods=['POST'])
-@auth.jwt_required
+@auth.token_required
 def audit_upload(customer, client):
   try:
     body = request.get_json()
@@ -103,38 +103,38 @@ def audit_upload(customer, client):
 
 # Internal Endpoints
 @app.route('/api/scan', methods=['POST'])
-@auth.token_required
+@auth.admin_token_required
 def scan(token):
   body = request.get_json()
   return {"message": "Scan initiated"}
 
 @app.route('/api/scan/group', methods=['POST'])
-@auth.token_required
+@auth.admin_token_required
 def scan_group(token):
   body = request.get_json()
   return {"message": "Scan initiated for group"}
 
 # TODO: Add endpoint to add client to specify group, creating group if it DNE
 @app.route('/api/scan/group/create', methods=['POST'])
-@auth.token_required
+@auth.admin_token_required
 def scan_group_create(token):
   body = request.get_json()
   return {"message": "Scan group created"}
 
 @app.route('/api/scan/group/membership', methods=['PUT'])
-@auth.token_required
+@auth.admin_token_required
 def scan_group_membership(token):
   body = request.get_json()
   return {"message": "Scan group membership updated"}
 
 @app.route('/api/contain', methods=['POST'])
-@auth.token_required
+@auth.admin_token_required
 def contain(token):
   body = request.get_json()
   return {"message": "Containment initiated"}
 
 @app.route('/api/uncontain', methods=['POST'])
-@auth.token_required
+@auth.admin_token_required
 def uncontain(token):
   body = request.get_json()
   return {"message": "Uncontainment initiated"}
